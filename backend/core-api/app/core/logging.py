@@ -1,0 +1,38 @@
+import logging
+import sys
+
+import structlog
+from structlog.types import EventDict
+
+
+def _add_service(_, __, event_dict: EventDict) -> EventDict:
+    from app.core.config import get_settings
+
+    event_dict["service"] = get_settings().service_name
+    event_dict["env"] = get_settings().env
+    return event_dict
+
+
+def configure_logging() -> None:
+    from app.core.config import get_settings
+
+    level = getattr(logging, get_settings().log_level.upper(), logging.INFO)
+    logging.basicConfig(format="%(message)s", stream=sys.stdout, level=level)
+
+    structlog.configure(
+        processors=[
+            structlog.contextvars.merge_contextvars,
+            structlog.processors.add_log_level,
+            structlog.processors.TimeStamper(fmt="iso", utc=True),
+            _add_service,
+            structlog.processors.StackInfoRenderer(),
+            structlog.processors.format_exc_info,
+            structlog.processors.JSONRenderer(),
+        ],
+        wrapper_class=structlog.make_filtering_bound_logger(level),
+        cache_logger_on_first_use=True,
+    )
+
+
+def get_logger(name: str | None = None) -> structlog.stdlib.BoundLogger:
+    return structlog.get_logger(name)

@@ -1,1 +1,64 @@
-wanderer_product_doc.md:Zone.Identifier
+# OS / IDE
+*.Identifier
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+
+# Android / Gradle
+android/.gradle/
+android/build/
+android/**/build/
+android/local.properties
+android/captures/
+android/.cxx/
+android/app/release/
+*.apk
+*.aab
+*.iml
+google-services.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+
+# Go
+backend/realtime-edge/bin/
+*.exe
+*.test
+*.out
+vendor/
+
+# Node
+node_modules/
+.next/
+dist/
+
+# Secrets
+*.pem
+*.key
+*.p8
+*.p12
+*.keystore
+*.jks
+secrets/
+
+# Docker / data volumes
+infra/data/
+
+# Mapbox / Firebase
+mapbox.token
+firebase-adminsdk-*.json
