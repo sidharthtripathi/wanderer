@@ -324,6 +324,17 @@ The user's preferred language stays whatever they pick in their profile. The fla
 
 This is a prompt-engineering problem, not a model-training one. Easy to implement, big impact on feel.
 
+### 6.1 Voice (when in voice mode)
+
+The voice is a delivery mechanism, not a brand element. What matters about voice mode:
+
+- **Quick.** Sub-second response feel. No noticeable lag between asking and hearing.
+- **Interruptible.** The user can talk over the AI mid-sentence; the AI stops within a fraction of a second and listens.
+- **Hands-free.** Once in voice mode, the mic stays open. No tap-to-speak per turn.
+- **Expressive enough to feel alive.** Not a flat TTS read. The voice has natural intonation and rhythm.
+
+The actual voice timbre is whatever the underlying model (Gemini Live) provides. We don't pin to one specific voice as a permanent brand asset, and we accept that the voice may evolve over time as the model updates. The user forms their relationship with the *persona* — its warmth, its knowledge, its way of suggesting — not with one particular set of vocal cords.
+
 ---
 
 ## 7. Safety and Policy
@@ -349,26 +360,41 @@ Wanderer is a guide, not a guarantor. The same way Google Maps isn't liable if a
 
 ## 8. Bootstrap Strategy
 
-### 8.1 Launch with One City
+### 8.1 Launch Globally, Seed a Few Cities
 
-Pick one city with a known local — ideally one of the founders' home cities (e.g., Gurgaon). Hand-curate **200-300 highlight POIs** across food / nightlife / experiences / scenic routes, plus **20-30 pre-built wander loops** of 2-4 hours each.
+The app works **anywhere from day one**. The AI guides users in any city by layering four sources of knowledge, in priority order:
 
-This is a few weeks of focused work and gives the AI enough context to feel magical from day one.
+1. **Community posts** when present (the local-tip texture)
+2. **External APIs** — Google Places, OSM, Atlas Obscura, Foursquare, Eventbrite, Reddit, travel blogs
+3. **The model's general knowledge** of cities and places
+4. **Live web grounding** for freshness ("is this open today", "what's happening tonight")
+
+A user landing in Majnu Ka Tila with zero community posts in our DB still gets a real, useful guide — the internet knows this place; so does the model. Community posts add irreplaceable local nuance, but their absence isn't a hole — it's a different texture.
+
+To make the experience feel distinctly local from day one in places we control, we **seed 2-3 cities**:
+
+- Pick cities the team knows deeply (e.g., Gurgaon, Goa, Bangalore)
+- Hand-curate **200-300 highlight POIs** per seed city across food / nightlife / experiences / scenic routes
+- Build **20-30 pre-built wander loops** of 2-4 hours each
+- Recruit **50-100 founding contributors** per seed city
+
+A few weeks of focused curation per seed city, repeated as we expand the seed list.
 
 ### 8.2 Seed the Community
 
-- Recruit 50-100 enthusiastic locals as founding contributors
+- Recruit 50-100 enthusiastic locals as founding contributors **in seed cities**
 - Give them generous launch-period point bonuses
 - Create a "Founding Local" badge that's permanent and visible — status-driven incentive
-- Host local meetups in launch cities to build identity around the contributor community
+- Host local meetups in seed cities to build identity around the contributor community
+- In non-seed cities, contributors can still post — they earn the same points and badges, just without the launch-period bonus
 
-### 8.3 Expand by City, Not by Country
+### 8.3 Grow Seed Cities Over Time
 
-Don't try to be global on day one. Expand one city at a time, repeating the pattern: hand-curate a base layer, recruit founding locals, layer in external APIs, let the community grow it.
+Seed cities are not the *only* working cities — they're the *richest* ones. Over time we add new seed cities by repeating the curation + contributor-recruitment pattern. The rest of the world keeps working continuously via APIs + model knowledge + organically grown community posts.
 
-### 8.4 Validation Milestones Before Expansion
+### 8.4 Maturity Milestones for a Seed City
 
-For each city before declaring it "ready":
+For a city to be considered a "fully seeded" city:
 
 - 300+ quality POIs (mix of curated + community)
 - 50+ active contributors
@@ -398,22 +424,23 @@ For each city before declaring it "ready":
 
 To avoid endless brainstorming and actually ship:
 
-**Launch city:** Gurgaon (or whichever city the team knows deeply).
+**Launch:** Global from day one. Functions anywhere via the four-source layered fallback (community → APIs → model knowledge → live web grounding). 2-3 hand-curated **seed cities** front-load the local-tip feel where the team has deepest knowledge.
 
 **Core features:**
 
-1. **Conversational AI guide** with memory and mid-trip updates
-2. **Filtered map view** showing only relevant POIs based on user vibe
-3. **Route-aware narration** with rolling 30-60 min horizon
-4. **Community contribution flow** (post + review + likes/engagement)
-5. **Subscription + earnable points** monetization
+1. **Conversational AI guide** with memory and mid-trip updates (text mode and voice mode, user picks)
+2. **Quick, interruptible voice mode** — hands-free, sub-second response, talk over the AI any time
+3. **Filtered map view** showing only relevant POIs based on user vibe
+4. **Route-aware narration** with rolling 30-60 min horizon
+5. **Community contribution flow** (post + review + likes/engagement)
+6. **Subscription + earnable points** monetization
 
 **Cut from v1:**
 
 - Offline mode (add later, after online experience is dialed in)
 - Affiliate booking integration (add once base experience proves out)
-- International expansion (one city first)
-- Multiple persona variants
+- Multiple persona variants (single persona, ever)
+- A signature/branded permanent voice (we use the underlying model's voice; it may evolve — we prioritize quickness and interruptibility over voice ownership)
 - Group mode (never — out of scope by design)
 
 **The first user is the founder.** If the founder can't take an evening drive in their own city using v1 and have a magical experience, nothing else matters yet.
